@@ -1,0 +1,103 @@
+
+body {
+	font-family: "Quattrocento Sans", sans-serif;
+	background-image: url("http://stockarch.com/files/14/07/notebook_paper.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+	font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    display: block;
+
+}
+
+h1 {
+	font-family: 'Gochi Hand', cursive;
+	font-weight:normal;
+	font-style:normal;
+	font-size:100px;
+    color:Black;
+}
+h2 {
+    font-family: 'Gochi Hand', cursive;
+    font-weight:normal;
+    font-style:normal;
+    font-size:60px;
+    color:Black;
+    margin:0;
+    padding:0;
+}
+.correct {
+    font-family: 'Gochi Hand', cursive;
+    font-weight:normal;
+    font-style:normal;
+    font-size:40px;
+    color: Green;
+    margin:0;
+    padding:0;
+}
+.incorrect {
+    font-family: 'Gochi Hand', cursive;
+    font-weight:normal;
+    font-style:normal;
+    font-size:40px;
+    color: Red;
+    margin:0;
+    padding:0;
+}
+
+p {
+    font-family: 'Gochi Hand', cursive;
+    margin:0;
+    padding:0;
+}
+table {
+	align-self: center;
+}
+th {
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+    color: Indigo;
+}
+
+td {
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+    font-weight:normal;
+    font-size:13px;
+    border-style:solid;
+    border-width:2px;
+}
+
+.button {
+    font-family: "Quattrocento Sans", sans-serif; 
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #000000;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 6px #999;
+}
+
+.button:hover {background-color: #555555;
+color: #ffffff;
+}
+
+.button:active {
+  background-color: #eeeeee;
+  color: #000000;
+  box-shadow: 0 2px #666;
+  transform: translateY(4px);
+}
+
+.centeredDiv { margin-top:150px; margin-right: auto; margin-left: auto; width: 800px; }

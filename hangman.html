@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head><title>Hangman Game</title>
+<link rel = "stylesheet" type = "text/css" href = "style.css"/>
+<link href="https://fonts.googleapis.com/css?family=Gochi+Hand|Just+Me+Again+Down+Here|Permanent+Marker|Quattrocento+Sans|Sue+Ellen+Francisco" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+  $("#game").hide();
+  $("#letter").val("");
+  
+});
+
+</script>
+
+</head>
+<body>
+<script type="text/javascript">
+  var words = [];
+  var word;
+  var guessed = [];
+  var count = 0;
+  var wrong = 0;
+  var blank ="";   
+  var win = 0;
+  var lose = 0;
+  var played = 0;   
+  // Welcome user
+  //get Initial word
+
+  function requestWord() {
+    //alert("We get here");
+    if(blank.includes("_")){
+    var r = confirm("Are you sure? Round will be counted as a loss.");
+    if(!r) { return;}
+    else{
+      lose++;
+    }
+    }
+    $("#feedback").text("");
+    $("#letter").show();
+    $("#letter").val("");
+    $("#submit").show();
+      guessed = [];
+      $("#guessed").text(guessed);
+      count = 0;
+      wrong = 0;
+      $("#stat").text( "# Guessed: " + count+" # Wrong: " + wrong );
+      blank = "";
+      
+    $.post("words.php",
+      function(data,status){
+            wrong = 0;
+
+            word = JSON.parse(data);
+            //alert(word.includes(arr));
+            
+            //alert(word);
+            $("#welcome").hide();
+            $("#game").show();
+            $("#hangpic").attr("src", "hangman"+ wrong +  ".png");
+
+            for(var i =0; i < word.length; i++){
+              blank += "_ ";
+            }
+            
+            $("#blank").text(blank);
+  });
+    if(words.includes(word)){
+      requestWord();
+      return;
+    }
+    else {
+      played++;
+      words.push(word);
+    }
+}
+//Check word is correct/ display appropriate feedback
+  function checkWord(){
+    if($("#letter").val().length != 1){
+      alert("Input one letter please");
+      return;
+    }
+    count++;
+
+    var letter = $("#letter").val();
+    guessed.push(letter);
+    $("#guessed").text(guessed);
+    if(!word.includes(letter)){
+      wrong++;
+      if(wrong == 7){
+        $("#hangpic").attr("src", "hangman"+ wrong +  ".png");
+        lost();
+        return;
+      }
+      $("#feedback").text("Wrong...");
+      $("#feedback").attr("class", "incorrect");
+      $("#hangpic").attr("src", "hangman"+ wrong +  ".png");
+      $("#letter").val("");
+      $("#stat").text( "# Guessed: " + count+" #Wrong: " + wrong );
+      return;
+    }
+    $("#feedback").attr("class", "correct");
+   
+    
+   for(var i =0; i < word.length; i++){
+          if(word[i] == letter){
+            
+            blank = blank.split(" ");
+            blank[i] = letter;
+            blank = blank.join(" ");
+         }
+            
+    }
+    $("#blank").text(blank);
+    $("#letter").val("");
+    
+    if(!blank.includes("_")){
+      won();
+      return;
+    }
+    $("#feedback").text("Correct!");
+    $("#stat").text( "# Guessed: " + count+" # Wrong: " + wrong );
+  }
+  function lost(){
+    $("#feedback").attr("class", "incorrect");
+    $("#feedback").text("You Lose");
+    blank = word;
+    $("#blank").text(blank);
+    lose++;
+    $("#stat").text("Played: " + played + " Wins: " + win + " Losses: " + lose + " Win Percentage: %" +  win/played*100);
+     $("#letter").hide();
+     $("#submit").hide();
+  }
+
+  function won(){
+    $("#feedback").attr("class", "correct");
+    $("#feedback").text("You Win");
+    win++;
+      $("#stat").text("Played: " + played + " Wins: " + win + " Losses: " + lose + " Win Percentage: %"+ win/played*100);
+     $("#letter").hide();
+     $("#submit").hide();
+  }
+  
+</script>
+  <div id="welcome" class="centeredDiv">
+  <h1> Welcome to Hangman </h1>
+  <button type="button" class="button" onclick="requestWord()">Click to begin</button>
+  </div>
+  <div id="game">
+  <h2>Hangman</h2>
+  <br /><br />
+  <button class="button" id="submit" onclick="checkWord()" style="height: 40px; font-size: 15px; padding-top: 10px; margin-right: 10px; ">Guess a letter</button>  <input id="letter" style="height: 30px; font-size: 25px;" type="text" 
+  width="100px" >
+   <br /><br />
+   <p id="guessed" style="font-weight: bold; font-size: 30px;"></p>
+  <img id="hangpic"  height="300px" width="auto">
+  <p class="correct" id="feedback"></p>
+  <p id="blank" style="font-weight: bold; font-size: 30px;"></p>
+   <br /><br />
+  <p id="stat" style="color: Blue; font-size: 30px;"></p> <button id="again" style="height: 40px; font-size: 15px; padding-top: 10px; margin-right: 10px; "type="button" class="button" onclick="requestWord()">Play Again</button>
+</div>
+</body>
+</html>
