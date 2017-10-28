@@ -87,6 +87,11 @@ $(document).ready(function() {
     count++;
 
     var letter = $("#letter").val();
+    letter = letter.toLowerCase();
+    if(guessed.includes(letter)){
+      alert("Letter has been used. Please enter a new letter.");
+      return;
+    }
     guessed.push(letter);
     $("#guessed").text(guessed);
     if(!word.includes(letter)){
@@ -153,7 +158,7 @@ $(document).ready(function() {
   <div id="game">
   <h2>Hangman</h2>
   <br /><br />
-  <button class="button" id="submit" onclick="checkWord()" style="height: 40px; font-size: 15px; padding-top: 10px; margin-right: 10px; ">Guess a letter</button>  <input id="letter" style="height: 30px; font-size: 25px;" type="text" 
+  <button class="button" id="submit" onclick="checkWord()" style="height: 40px; font-size: 15px; padding-top: 10px; margin-right: 10px; ">Guess a letter</button>  <input id="letter" style="height: 30px; font-size: 25px;" onkeydown="if (event.keyCode == 13) { checkWord();}" type="text" 
   width="100px" >
    <br /><br />
    <p id="guessed" style="font-weight: bold; font-size: 30px;"></p>
