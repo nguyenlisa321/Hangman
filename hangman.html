@@ -45,15 +45,17 @@ $(document).ready(function() {
       guessed = [];
       $("#guessed").text(guessed);
       count = 0;
-      wrong = 0;
+      wrong = 0
       $("#stat").text( "# Guessed: " + count+" # Wrong: " + wrong );
       blank = "";
       
-    $.post("words.php",
+    $.get("words.txt",
       function(data,status){
             wrong = 0;
-
-            word = JSON.parse(data);
+            arr = data.split("\n")
+            index = Math.floor(Math.random()* arr.length)
+            word = arr[index]
+            //word = JSON.parse(data);
             //alert(word.includes(arr));
             
             //alert(word);
